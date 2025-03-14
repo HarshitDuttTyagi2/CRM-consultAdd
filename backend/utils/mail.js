@@ -14,7 +14,7 @@ const sendEmail = async (userEmail, sub, msg) => {
     try {
         console.log(userEmail)
         const info = await transport.sendMail({
-            from: '"CODEDEV"<codedevservices@gmail.com>',
+            from: '"TEAM AI"<harshit.t@consultadd.com>',
             to: userEmail,
             subject: sub,
             html: msg
