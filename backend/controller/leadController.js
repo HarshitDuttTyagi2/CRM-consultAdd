@@ -3,7 +3,7 @@ const stages = require("../models/leadStagesModels");
 const contact = require("../models/contactModels");
 
 exports.createLead = async (req, res) => {
-  console.log("req.body in create lead", req.body);
+  // console.log("req.body in create lead", req.body);
   const {
     title,
     companyName,
@@ -13,6 +13,7 @@ exports.createLead = async (req, res) => {
     description,
     stage,
     location,
+    employeeID
   } = req.body;
 
   try {
@@ -23,7 +24,8 @@ exports.createLead = async (req, res) => {
       !phone ||
       !email ||
       !description ||
-      !location
+      !location ||
+      !employeeID
     ) {
       console.log("please fill all fields");
       return res.status(400).send({
@@ -61,6 +63,7 @@ exports.createLead = async (req, res) => {
       location,
       currentStage: stageData.stageName,
       location,
+      employeeID
     });
     stageData.leads.push(leaddata._id);
     await stageData.save();
