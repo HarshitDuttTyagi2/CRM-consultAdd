@@ -24,7 +24,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           <div className="text-2xl font-bold text-gray-800 dark:text-white">
-            <Link to="/">CRM</Link>
+            <Link to="/">ConsultAdd</Link>
           </div>
 
           {/* Menu Links */}

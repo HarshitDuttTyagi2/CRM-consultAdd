@@ -54,9 +54,9 @@ const AdminSidebar = ({ handleLogout, location }) => {
   return (
     <div className="flex flex-col h-[100dvh] max-h-screen w-full bg-gray-900 text-gray-100 shadow-lg">
       {/* Sidebar Header */}
-      <div className="flex-shrink-0 p-4 bg-gray-900 flex justify-center">
+      {/* <div className="flex-shrink-0 p-4 bg-gray-900 flex justify-center">
         <img src={logo} alt="Logo Image" className="w-[150px] object-contain" />
-      </div>
+      </div> */}
 
       {/* Sidebar Navigation */}
       <nav className="flex-grow overflow-y-auto p-4 hideScroll">
@@ -169,9 +169,9 @@ const SubAdminSidebar = ({ handleLogout, location, user }) => {
   return (
     <div className="flex flex-col h-[100dvh] max-h-screen w-full bg-gray-900 text-gray-100 shadow-lg">
       {/* Sidebar Header */}
-      <div className="flex-shrink-0 p-4 bg-gray-900 flex justify-center">
+      {/* <div className="flex-shrink-0 p-4 bg-gray-900 flex justify-center">
         <img src={logo} alt="Logo Image" className="w-[150px] object-contain" />
-      </div>
+      </div> */}
 
       {/* Sidebar Navigation */}
       <nav className="flex-grow overflow-y-auto p-4 hideScroll">
@@ -202,14 +202,14 @@ const SubAdminSidebar = ({ handleLogout, location, user }) => {
               location={location}
             />
           )}
-          {user.permission?.project?.read && (
+          {/* {user.permission?.project?.read && (
             <SidebarItem
               to="/projects"
               icon={<FaHandshake />}
               text="Projects"
               location={location}
             />
-          )}
+          )} */}
           {user.permission?.team?.read && (
             <SidebarItem
               to="/teams"
@@ -218,22 +218,22 @@ const SubAdminSidebar = ({ handleLogout, location, user }) => {
               location={location}
             />
           )}
-          {user.permission?.meeting?.read && (
+          {/* {user.permission?.meeting?.read && (
             <SidebarItem
               to="/meetingmanagement"
               icon={<FaCalendar />}
               text="Meetings"
               location={location}
             />
-          )}
-          {user.permission?.connection?.read && (
+          )} */}
+          {/* {user.permission?.connection?.read && (
             <SidebarItem
               to="/connection"
               icon={<FaUsers />}
               text="Connection"
               location={location}
             />
-          )}
+          )} */}
           {user.permission?.userVerification?.read && (
             <SidebarItem
               to="/userverification"
@@ -242,14 +242,14 @@ const SubAdminSidebar = ({ handleLogout, location, user }) => {
               location={location}
             />
           )}
-          {user.permission?.query?.read && (
+          {/* {user.permission?.query?.read && (
             <SidebarItem
               to="/query"
               icon={<MdQueryBuilder />}
               text="Query"
               location={location}
             />
-          )}
+          )} */}
         </ul>
       </nav>
 
@@ -270,9 +270,9 @@ const EmployeeSidebar = ({ handleLogout, location, user }) => {
   return (
     <div className="flex flex-col h-screen w-64 bg-gray-900 text-gray-100 shadow-lg">
       {/* Sidebar Header */}
-      <div className="flex-shrink-0 p-4 bg-gray-900 flex justify-center">
+      {/* <div className="flex-shrink-0 p-4 bg-gray-900 flex justify-center">
         <img src={logo} alt="Logo Image" className="w-[150px] object-contain" />
-      </div>
+      </div> */}
 
       {/* Sidebar Navigation */}
       <nav className="flex-grow p-4 hideScroll">
@@ -297,15 +297,15 @@ const EmployeeSidebar = ({ handleLogout, location, user }) => {
               location={location}
             />
           )}
-          {user.permission?.project?.read && (
+          {/* {user.permission?.project?.read && (
             <SidebarItem
               to="/projects"
               icon={<FaHandshake />}
               text="Projects"
               location={location}
             />
-          )}
-          {user.permission?.team?.read && (
+          )} */}
+          {/* {user.permission?.team?.read && (
             <SidebarItem
               to="/teams"
               icon={<HiOutlineUserGroup />}
@@ -344,7 +344,7 @@ const EmployeeSidebar = ({ handleLogout, location, user }) => {
               text="Query"
               location={location}
             />
-          )}
+          )} */}
         </ul>
       </nav>
 
