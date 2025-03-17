@@ -42,6 +42,10 @@ const leadSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
     },
+    employeeID: {
+      type: String,
+      required: [true, "employeeID is required"],
+    }
   },
   { timestamps: true }
 );
