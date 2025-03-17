@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import { getUser } from "../../services/authService";
+import { getTeamById } from "../../services/TeamService"; // Ensure correct import path
+
 const LeadFormModal = ({
   showModal,
   formData,
@@ -8,10 +11,34 @@ const LeadFormModal = ({
   resetForm,
   stages,
 }) => {
-  console.log("Stages in Form Model:", stages);
   if (!showModal) return null;
-  const user = getUser(); // Get the logged-in user
-  const userTeam = user?.team || ""; // Extract assigned team
+
+  const [teamName, setTeamName] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserTeam = async () => {
+      try {
+        const user = await getUser(); // Ensure getUser() resolves first
+        console.log("User Data:", user);
+
+        const userTeamId = user?.teamId; // Extract teamId safely
+        if (userTeamId) {
+          const team = await getTeamById(userTeamId); // Fetch team by ID
+          setTeamName(team?.teamName || "Unknown Team");
+        } else {
+          setTeamName("No Team Assigned");
+        }
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+        setTeamName("Error Loading Team");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserTeam(); // Call the async function
+  }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
@@ -156,8 +183,8 @@ const LeadFormModal = ({
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 required
               >
-                <option value="">Select a team</option>
-                <option value={userTeam}>{userTeam}</option>
+<option value="">{loading ? "Loading..." : "Select a team"}</option>
+{teamName && <option value={teamName}>{teamName}</option>}
               </select>
             </div>
 
