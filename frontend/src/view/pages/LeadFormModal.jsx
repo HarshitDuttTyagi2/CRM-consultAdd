@@ -1,4 +1,4 @@
-
+import { getUser } from "../../services/authService";
 const LeadFormModal = ({
   showModal,
   formData,
@@ -10,6 +10,8 @@ const LeadFormModal = ({
 }) => {
   console.log("Stages in Form Model:", stages);
   if (!showModal) return null;
+  const user = getUser(); // Get the logged-in user
+  const userTeam = user?.team || ""; // Extract assigned team
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
@@ -155,8 +157,7 @@ const LeadFormModal = ({
                 required
               >
                 <option value="">Select a team</option>
-                <option value="marketing">Marketing</option>
-                <option value="developer">Developer</option>
+                <option value={userTeam}>{userTeam}</option>
               </select>
             </div>
 

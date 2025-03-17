@@ -68,7 +68,7 @@ const permissionSchema = {
     update: false,
     delete: false,
     read: false,
-    requiredPermission: ["lead", "project", "meeting"],
+    requiredPermission: ["lead", "project"],
   },
   // meeting: {
   //   create: false,

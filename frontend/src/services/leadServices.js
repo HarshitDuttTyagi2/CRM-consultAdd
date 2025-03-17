@@ -1,10 +1,18 @@
 import api from "./api";
+import { getUser } from "../services/authService";
+
 
 export const leadService = {
+
   createLead: async (leadData) => {
     console.log("leadData in leadService:", leadData);
     try {
-      const response = await api.post("/lead/create", leadData);
+      const user = await getUser(); // Fetch user details
+      const employeeID = user?._id; // Extract employeeID
+
+      const enrichedLeadData = { ...leadData, employeeID }; // Add employeeID to leadData
+
+      const response = await api.post("/lead/create", enrichedLeadData);
       return response.data;
     } catch (error) {
       throw error.response ? error.response.data : error.message;
