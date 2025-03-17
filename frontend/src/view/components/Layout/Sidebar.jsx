@@ -12,7 +12,7 @@ import { FaCalendar } from "react-icons/fa6";
 import { MdQueryBuilder, MdVerifiedUser } from "react-icons/md";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { useAuth } from "../../../context/Context";
-import logo from "../../../assets/images/logoDevPurple.png";
+import logo from "../../../assets/images/logo.png";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -80,12 +80,12 @@ const AdminSidebar = ({ handleLogout, location }) => {
             text="Leads"
             location={location}
           />
-          <SidebarItem
+          {/* <SidebarItem
             to="/projects"
             icon={<FaHandshake />}
             text="Projects"
             location={location}
-          />
+          /> */}
 
           <SidebarItem
             to="/teams"
@@ -94,18 +94,18 @@ const AdminSidebar = ({ handleLogout, location }) => {
             location={location}
           />
 
-          <SidebarItem
+          {/* <SidebarItem
             to="/meetingmanagement"
             icon={<FaCalendar />}
             text="Meetings"
             location={location}
-          />
-          <SidebarItem
+          /> */}
+          {/* <SidebarItem
             to="/connection"
             icon={<FaUsers />}
             text="Connection"
             location={location}
-          />
+          /> */}
 
           <SidebarItem
             to="/userverification"
@@ -113,12 +113,12 @@ const AdminSidebar = ({ handleLogout, location }) => {
             text="User Verification"
             location={location}
           />
-          <SidebarItem
+          {/* <SidebarItem
             to="/query"
             icon={<MdQueryBuilder />}
             text="Query"
             location={location}
-          />
+          /> */}
             <SidebarItem
             to="/profile"
             icon={<FaUser />}

@@ -24,9 +24,9 @@ const permissionCategories = [
   "team",
   "user",
   "client",
-  "meeting",
-  "connection",
-  "query",
+  // "meeting",
+  // "connection",
+  // "query",
 ];
 
 const permissionSchema = {
@@ -70,22 +70,22 @@ const permissionSchema = {
     read: false,
     requiredPermission: ["lead", "project", "meeting"],
   },
-  meeting: {
-    create: false,
-    update: false,
-    read: false,
-    requiredPermission: ["client", "project"],
-  },
-  connection: {
-    create: false,
-    update: false,
-    delete: false,
-    read: false,
-  },
-  query: {
-    respond: false,
-    read: false,
-  },
+  // meeting: {
+  //   create: false,
+  //   update: false,
+  //   read: false,
+  //   requiredPermission: ["client", "project"],
+  // },
+  // connection: {
+  //   create: false,
+  //   update: false,
+  //   delete: false,
+  //   read: false,
+  // },
+  // query: {
+  //   respond: false,
+  //   read: false,
+  // },
 };
 
 const UserVerificationList = () => {
