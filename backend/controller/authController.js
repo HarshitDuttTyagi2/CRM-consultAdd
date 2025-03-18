@@ -716,10 +716,10 @@ exports.googleUser = async (req, res)=>{
     if(userData){
       if(userData.signupMode==="email"){
         res.s = true;
-        return res.redirect('http://localhost:5173/login')
+        return res.redirect(`${process.env.FRONTEND_URL}/login`)
       }
       generateToken(userData._id, res);
-      return res.redirect('http://localhost:5173/dashboard')
+      return res.redirect(`${process.env.FRONTEND_URL}/dashboard`)
     }
     const createUserData = await user.create({name, email: emails[0].value, signupMode: "google", profileImage: photos[0].value})
     
@@ -731,10 +731,10 @@ exports.googleUser = async (req, res)=>{
       });
     }
     generateToken(createUserData.id, res);
-    return res.redirect('http://localhost:5173/dashboard')
+    return res.redirect(`${process.env.FRONTEND_URL}/dashboard`)
   }catch(error){
     console.log(error);
-    return res.redirect('http://localhost:5173/login')
+    return res.redirect(`${process.env.FRONTEND_URL}/login`)
   }
 }
 
