@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../modal/Modal";
 import { Input } from "../components/UI/ProjectCommanUI";
 import { Select } from "../components/UI/ProjectCommanUI";
 import { Button } from "../components/UI/ProjectCommanUI";
