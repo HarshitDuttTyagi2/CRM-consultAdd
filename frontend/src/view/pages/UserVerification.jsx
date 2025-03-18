@@ -20,10 +20,10 @@ import { useToast } from "../../context/ToastContext";
 const permissionCategories = [
   "lead",
   "leadStage",
-  "project",
+  // "project",
   "team",
   "user",
-  "client",
+  // "client",
   // "meeting",
   // "connection",
   // "query",
@@ -45,12 +45,12 @@ const permissionSchema = {
     read: false,
     requiredPermission: ["lead"],
   },
-  project: {
-    create: false,
-    update: false,
-    read: false,
-    requiredPermission: ["client", "team"],
-  },
+  // project: {
+  //   create: false,
+  //   update: false,
+  //   read: false,
+  //   requiredPermission: ["client", "team"],
+  // },
   team: {
     create: false,
     update: false,
@@ -63,13 +63,13 @@ const permissionSchema = {
     verifyAndAssignRoleAndTeam: false,
     requiredPermission: ["team"],
   },
-  client: {
-    create: false,
-    update: false,
-    delete: false,
-    read: false,
-    requiredPermission: ["lead", "project"],
-  },
+  // client: {
+  //   create: false,
+  //   update: false,
+  //   delete: false,
+  //   read: false,
+  //   requiredPermission: ["lead", "project"],
+  // },
   // meeting: {
   //   create: false,
   //   update: false,
