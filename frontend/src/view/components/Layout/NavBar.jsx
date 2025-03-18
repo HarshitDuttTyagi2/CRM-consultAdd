@@ -41,12 +41,12 @@ const Navbar = () => {
             <Link to="/todo" className="text-gray-600 dark:text-gray-200 hover:text-blue-500 transition duration-300">
               Todo
             </Link> */}
-            <Link
+            {/* <Link
               to="/contactus"
               className="text-gray-600 dark:text-gray-200 hover:text-blue-500 transition duration-300"
             >
               Contact Us
-            </Link>
+            </Link> */}
             {/* <Link
               to="/aboutus"
               className="text-gray-600 dark:text-gray-200 hover:text-blue-500 transition duration-300"
