@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllTeams } from "../../services/teamService";
+import { getAllTeams } from "../../services/TeamService";
 import { createProject } from "../../services/projectService";
 
 const AddProjectModal = ({ isOpen, onClose, onAddProject, clientId }) => {
