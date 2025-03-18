@@ -1,6 +1,6 @@
 // Button.jsx
 import React from 'react';
-import Modal from '../../Modal/Modal';
+import Modal from '../../modal/Modal';
 
 const Button = ({ children, variant = 'primary', icon, ...props }) => {
   const baseClasses = 'px-4 py-2 rounded font-semibold flex items-center justify-center transition-colors';
