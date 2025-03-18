@@ -50,6 +50,9 @@ app.use(passport.session());
 
 const GoogleStrategy = require("./possport")
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "success", message: "Server is healthy" });
+});
 
 app.use("/auth", googleAuth)
 app.use("/api/auth", authRoutes);
