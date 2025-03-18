@@ -45,6 +45,32 @@ const leadStatics = async () => {
     }
 }
 
+async function leadDataStatics(employeeID, date) {
+    try {
+        let leadData = {};
+        const matchConditions = {};
+
+        if (employeeID) {
+            matchConditions.employeeID = employeeID;
+        }
+
+        if (date) {
+            const [year, month, day] = date.split('-').map(Number);
+            const startOfMonth = new Date(year, month - 1, 1);
+            const endOfMonth = new Date(year, month, 0);
+            matchConditions.createdAt = { $gte: startOfMonth, $lte: endOfMonth };
+        }
+
+        leadData.total = await Lead.countDocuments(matchConditions);
+
+        return leadData;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
 const projectStatics = async () => {
     try {
         let projectData = {}
@@ -216,30 +242,17 @@ const teamStatics = async () => {
 
 exports.getAdminDashboardData = async (req, res) => {
   try {
-    const leadData = await leadStatics();
-    const projectData = await projectStatics();
-    const userData = await userStatics(req);
-    const clientData = await clientStatics();
-    const queryData = await queryStatics();
-    const connectionData = await connectionStatics();
-    const teamData = await teamStatics();
-    console.log({
-        leadData,
-        projectData,
-        userData,
-        clientData,
-        queryData,
-        connectionData,
-        teamData,
-      })
+    const employeeID = req.query.employeeID;
+    const date = req.query.date;
+    const leadData = await leadDataStatics(employeeID, date);
+    // const projectData = await projectStatics();
+    // const userData = await userStatics(req);
+    // const clientData = await clientStatics();
+    // const queryData = await queryStatics();
+    // const connectionData = await connectionStatics();
+    // const teamData = await teamStatics();
     return res.status(200).send({
-      leadData,
-      projectData,
-      userData,
-      clientData,
-      queryData,
-      connectionData,
-      teamData,
+      leadData
     });
   } catch (error) {
     console.log(error);
