@@ -1,4 +1,5 @@
 const checkAdmin = () => {
+  console.log('check admin');
   return async (req, res, next) => {
     // Check if the user is authenticated
     if (!req.user) {

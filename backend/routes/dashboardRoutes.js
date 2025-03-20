@@ -6,6 +6,9 @@ const { checkAdmin } = require("../middleware/checkAdmin")
 
 const routers = express.Router();
 
-routers.get("/admin", jwtToken, checkAdmin(), getAdminDashboardData);
+routers.get("/admin", jwtToken, checkAdmin(), (req, res, next) => {
+  console.log("Admin dashboard route accessed");
+  getAdminDashboardData(req, res, next);
+});
 
 module.exports = routers;

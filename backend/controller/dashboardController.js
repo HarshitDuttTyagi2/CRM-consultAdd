@@ -242,6 +242,7 @@ const teamStatics = async () => {
 
 exports.getAdminDashboardData = async (req, res) => {
   try {
+    console.log("inside admin dashboard data");
     const employeeID = req.query.employeeID;
     const date = req.query.date;
     const leadData = await leadDataStatics(employeeID, date);
