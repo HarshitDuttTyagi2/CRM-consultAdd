@@ -9,7 +9,7 @@ const LeadDetails = () => {
   const { updateLead, deleteLead, getLeadById } = leadService;
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth();
+  const { user} = useAuth();
   const [lead, setLead] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ const LeadDetails = () => {
   const canReadLead = user?.role === "admin" || user?.permission?.lead?.read;
   const canUpdateLead = user?.role === "admin" || user?.permission?.lead?.update;
   const canDeleteLead = user?.role === "admin" || user?.permission?.lead?.delete;
-
+  const isAuthenticated = !!user;
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -30,13 +30,21 @@ const LeadDetails = () => {
       setLoading(false);
       showToast("You don't have permission to view lead details.", "error");
     }
-  }, [isAuthenticated, canReadLead, id, navigate]);
+  }, [canReadLead, id, navigate]);
+
+  useEffect(() => {
+    if (lead) {
+      console.log("Lead has been updated:", lead);
+    }
+  }, [lead]);
 
   const fetchLeadDetails = async () => {
     try {
       setLoading(true);
       const data = await getLeadById(id);
-      setLead(data);
+      console.log("Fetched Lead Data:", data);
+  
+      setLead(data); // This will trigger the `useEffect` when `lead` updates
     } catch (err) {
       console.error("Error fetching lead details:", err);
       showToast("Failed to fetch lead details. Please try again.", "error");
@@ -44,6 +52,7 @@ const LeadDetails = () => {
       setLoading(false);
     }
   };
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -147,7 +156,7 @@ const LeadDetails = () => {
               className="w-full p-2 border rounded"
               rows="4"
             />
-            <select
+            {/* <select
               name="stage"
               value={lead.currentStage}
               onChange={handleInputChange}
@@ -159,7 +168,7 @@ const LeadDetails = () => {
               <option value="Negotiation">Negotiation</option>
               <option value="Lead-Won">Lead Won</option>
               <option value="Lead-Lost">Lead Lost</option>
-            </select>
+            </select> */}
           </>
         ) : (
           <>
@@ -184,9 +193,9 @@ const LeadDetails = () => {
             <p className="text-xl text-gray-700">
               <strong>Current Stage:</strong> {lead.currentStage}
             </p>
-            <p className="text-xl text-gray-700">
+            {/* <p className="text-xl text-gray-700">
               <strong>Team:</strong> {lead.team}
-            </p>
+            </p> */}
             {/* <p className="text-xl text-gray-700">
               <strong>Assigned To:</strong>{" "}
               {lead.assignedTo?.name || "Not Assigned"}
