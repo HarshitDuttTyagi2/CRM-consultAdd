@@ -5,6 +5,7 @@ const uploadOnCloudinary = require("../utils/cloudinary");
 exports.getUser = async (req, res) => {
   try {
     let user = req.user;
+    console.log("in User controller", user);
     res.status(200).json(user);
   } catch (error) {
     console.log(err);
