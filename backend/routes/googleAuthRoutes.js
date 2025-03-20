@@ -8,6 +8,12 @@ const { googleUser } = require("../controller/authController");
 //     res.send("<a href='/auth/google'>Login with Google</a>");
 //   });
 
+router.get('/callback', (req, res) => {
+  const code = req.query.code;
+  console.log("code in /auth/callback ", code)
+  res.send("Inside callback method");
+});
+
 router.get("/failureRedirect", (req,res)=>{
     return res.status(400).json({
         error: "google login failed"

@@ -4,6 +4,7 @@ import React from 'react';
 const Googlebutton = (props) => {
 
   const handleGoogleLogin = () => {
+    console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
     window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
   };
 
