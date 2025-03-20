@@ -19,7 +19,13 @@ router.get("/failureRedirect", (req,res)=>{
   );
   
   router.get(
-    "/google/callback",passport.authenticate("google", { failureRedirect: "/failureRedirect" }),googleUser);
+    "/google/callback",
+    passport.authenticate("google", { failureRedirect: "/failureRedirect" }),
+    (req, res, next) => {
+      console.log("Google authentication successful");
+      googleUser(req, res, next);
+    }
+  );
 
 
 module.exports = router;
