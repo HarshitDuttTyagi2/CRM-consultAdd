@@ -1,4 +1,5 @@
-
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -24,8 +25,10 @@ const googleAuth = require("./routes/googleAuthRoutes")
 
 require("dotenv").config();
 
-const URL = process.env.DB_URL;
+// const URL = process.env.DB_URL;
 const PORT = process.env.PORT || 3000;
+
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, }) .then(() => { console.log("MongoDB connected successfully!"); }) .catch((err) => { console.error("Error connecting to MongoDB:", err.message); });
 
 app.use(express.json());
 app.use(cookieParser());
@@ -69,7 +72,12 @@ app.use("/api/project", projectRoutes);
 app.use("/api/meeting", meetingRoutes);
 app.use("/api/dashboard", dashboardRoutes)
 
-app.listen(PORT, async () => {
-  await connectDB(URL);
-  console.log(`Server running on Post- ${PORT}`.bgBlue.black);
+// app.listen(PORT, async () => {
+//   await connectDB(URL);
+//   console.log(`Server running on Post- ${PORT}`.bgBlue.black);
+// });
+
+app.listen(PORT, () => {
+  // connect();
+  console.log("Server running on 3000");
 });
