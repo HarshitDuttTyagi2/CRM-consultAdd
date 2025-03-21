@@ -35,8 +35,10 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // No wildcard ("*") when using credentials
-    credentials: true,
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"], // Allow frontend domain
+    credentials: true, // Required for cookies (JWT stored in cookies)
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Restrict methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow headers
   })
 );
 
