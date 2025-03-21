@@ -14,8 +14,8 @@ const generateToken = (id,res) => {
   res.cookie("token",token, {
     maxAge: expirationTime,
     httpOnly: true,
-    secure: true,
-    sameSite: "strict"
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None"
   })
   console.log("token " ,token)
   // return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });

@@ -35,18 +35,23 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, "http://localhost:3000"], // Allow frontend domain
-    credentials: true, // Required for cookies (JWT stored in cookies)
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Restrict methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allow headers
+    origin: [process.env.FRONTEND_URL, "http://localhost:3000"], // Allow frontend domains
+    credentials: true, // Required for sending cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 app.use(
   session({
-    secret: "secret",
+    secret: process.env.SESSION_SECRET || "fallback_secret",
     resave: false,
     saveUninitialized: true,
+    cookie: {
+      secure: process.env.NODE_ENV === "production", // Secure in production
+      httpOnly: true, // Prevent client-side access
+      sameSite: "None", // Allow cross-site usage
+    },
   })
 );
 
