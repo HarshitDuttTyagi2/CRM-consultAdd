@@ -141,7 +141,7 @@ const msgForRegister = (otp, name) => {
       <div><i class="fas fa-lock otp-lock"></i></div>
       <div class="welcome-section">
         <div class="app-name">
-          --- CodeDev ---
+          --- TeamAI ---
         </div>
         <div class="welcome-text">
           Thanks for signing up !
@@ -166,7 +166,7 @@ const msgForRegister = (otp, name) => {
     </div>
     <div class="footer-text">
       <p>If you did not request this OTP, please <a href="#">contact us</a> immediately.</p>
-      <p>Thank you,<br>The CodeDev Team</p>
+      <p>Thank you,<br>The AI Team at ConsultAdd</p>
     </div>
   </div>
 
@@ -237,19 +237,19 @@ exports.sendOtpForRegister = async (req, res) => {
       maxAge: expirationTime,
       httpOnly: true,
       secure: true,
-      sameSite: "strict"
+      sameSite: "None"
     });
     res.cookie("name", name, { 
       maxAge: expirationTime,
       httpOnly: true,
       secure: true,
-      sameSite: "strict"
+      sameSite: "None"
     });
     res.cookie("email", email, { 
       maxAge: expirationTime,
       httpOnly: true,
       secure: true,
-      sameSite: "strict"
+      sameSite: "None"
     });
     return res.status(200).json({
       success: true,
@@ -501,7 +501,7 @@ let msg = (otp, name) =>{
         <p>This OTP is valid for the next 10 minutes. If you did not request this password reset, please ignore this email or contact our support team.</p>
         <p>For your security, do not share this OTP with anyone.</p>
         <p>Thank you,<br>
-        The CODEDEV Team</p>
+        The AI Team at ConsultAdd</p>
         <p style="font-size: 12px; color: #777; text-align: center;">If you need help, feel free to contact us at <a href="mailto:codedevservices@gmail.com">codedevservices@gmail.com</a></p>
     </div>
 </body>

@@ -5,7 +5,7 @@ const sendEmail = async (userEmail, sub, msg) => {
         host: process.env.NODEMAILER_HOST,
         port: process.env.NODEMAILER_PORT,
         sender: true,
-        secure: false,
+        secure: true,
         auth: {
             user: process.env.EMAIL_ID,
             pass: process.env.APP_PASS
