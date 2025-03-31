@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUser } from "../../services/authService";
+import { getUser, getAllUsers } from "../../services/authService";
 import { getTeamById } from "../../services/TeamService"; // Ensure correct import path
 
 const LeadFormModal = ({
@@ -15,6 +15,28 @@ const LeadFormModal = ({
 
   const [teamName, setTeamName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const userList = await getAllUsers(); // Fetch all users
+        console.log("All Users:", userList);
+  
+        if (userList && Array.isArray(userList)) {
+          setUsers(userList); // Set the list of users
+        } else {
+          setUsers([]);
+          console.warn("No users found");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setUsers([]);
+      }
+    };
+  
+    fetchUsers(); // Call the async function
+  }, []);
 
   useEffect(() => {
     const fetchUserTeam = async () => {
@@ -192,14 +214,20 @@ const LeadFormModal = ({
               <label className="text-gray-700 text-sm font-medium mb-1">
                 User Name
               </label>
-              <input
-                type="text"
-                name="userName"
-                value={formData.userName}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
-              />
+              <select
+    name="userName"
+    value={formData.userName}
+    onChange={handleInputChange}
+    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    required
+  >
+    <option value="">Select a user</option>
+    {users.map((user) => (
+      <option key={user._id || user.userId} value={user.name}>
+        {user.name}
+      </option>
+    ))}
+  </select>
             </div>
 
             {/* Description */}

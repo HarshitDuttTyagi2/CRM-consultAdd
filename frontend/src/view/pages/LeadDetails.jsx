@@ -4,6 +4,7 @@ import { leadService } from "../../services/leadServices";
 import { useAuth } from "../../context/Context";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import { useToast } from "../../context/ToastContext";
+import { getAllUsers } from "../../services/authService";
 
 const LeadDetails = () => {
   const { updateLead, deleteLead, getLeadById } = leadService;
@@ -14,7 +15,7 @@ const LeadDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [users, setUsers] = useState([]);
   const {showToast} = useToast()
 
   const canReadLead = user?.role === "admin" || user?.permission?.lead?.read;
@@ -52,7 +53,26 @@ const LeadDetails = () => {
       setLoading(false);
     }
   };
-  
+  const fetchUsers = async () => {
+    try {
+      const userList = await getAllUsers(); // Fetch all users
+      console.log("All Users:", userList);
+
+      if (userList && Array.isArray(userList)) {
+        setUsers(userList); // Set the list of users
+      } else {
+        setUsers([]);
+        console.warn("No users found");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setUsers([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -153,14 +173,31 @@ const LeadDetails = () => {
               placeholder="Enter Phone"
               className="w-full p-2 border rounded"
             />
-                       <input
+                       {/* <input
               type="text"
               name="userName"
               value={lead.userName}
               onChange={handleInputChange}
               placeholder="Enter User Name"
               className="w-full p-2 border rounded"
-            />
+            /> */}
+
+<select
+    name="userName"
+    value={lead.userName}
+    onChange={handleInputChange}
+    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+    placeholder="Enter User Name"
+    required
+  >
+    <option value="">Select a user</option>
+    {users.map((user) => (
+      <option key={user._id || user.userId} value={user.name}>
+        {user.name}
+      </option>
+    ))}
+  </select>
+
             <textarea
               name="description"
               value={lead.description}
