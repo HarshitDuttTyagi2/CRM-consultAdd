@@ -13,7 +13,8 @@ exports.createLead = async (req, res) => {
     description,
     stage,
     location,
-    employeeID
+    employeeID,
+    userName
   } = req.body;
 
   try {
@@ -25,7 +26,8 @@ exports.createLead = async (req, res) => {
       !email ||
       !description ||
       !location ||
-      !employeeID
+      !employeeID ||
+      !userName
     ) {
       console.log("please fill all fields");
       return res.status(400).send({
@@ -63,7 +65,8 @@ exports.createLead = async (req, res) => {
       location,
       currentStage: stageData.stageName,
       location,
-      employeeID
+      employeeID,
+      userName
     });
     stageData.leads.push(leaddata._id);
     await stageData.save();
