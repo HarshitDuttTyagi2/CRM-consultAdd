@@ -126,6 +126,7 @@ const LeadDetails = () => {
               name="title"
               value={lead.title}
               onChange={handleInputChange}
+              placeholder="Enter Title"
               className="w-full p-2 border rounded"
             />
             <input
@@ -133,6 +134,7 @@ const LeadDetails = () => {
               name="companyName"
               value={lead.companyName}
               onChange={handleInputChange}
+              placeholder="Enter Company Name"
               className="w-full p-2 border rounded"
             />
             <input
@@ -140,6 +142,7 @@ const LeadDetails = () => {
               name="contactName"
               value={lead.contactName}
               onChange={handleInputChange}
+              placeholder="Enter Contact name"
               className="w-full p-2 border rounded"
             />
             <input
@@ -147,12 +150,22 @@ const LeadDetails = () => {
               name="phone"
               value={lead.phone}
               onChange={handleInputChange}
+              placeholder="Enter Phone"
+              className="w-full p-2 border rounded"
+            />
+                       <input
+              type="text"
+              name="userName"
+              value={lead.userName}
+              onChange={handleInputChange}
+              placeholder="Enter User Name"
               className="w-full p-2 border rounded"
             />
             <textarea
               name="description"
               value={lead.description}
               onChange={handleInputChange}
+              placeholder="Enter Description"
               className="w-full p-2 border rounded"
               rows="4"
             />
@@ -186,6 +199,9 @@ const LeadDetails = () => {
             </p>
             <p className="text-xl text-gray-700">
               <strong>Email:</strong> {lead.email}
+            </p>
+            <p className="text-xl text-gray-700">
+              <strong>User Name:</strong> {lead.userName}
             </p>
             <p className="text-xl text-gray-700">
               <strong>Description:</strong> {lead.description}

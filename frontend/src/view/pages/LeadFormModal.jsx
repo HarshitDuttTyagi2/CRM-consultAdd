@@ -187,6 +187,20 @@ const LeadFormModal = ({
 {teamName && <option value={teamName}>{teamName}</option>}
               </select>
             </div>
+                        {/* User/Lead maker Name */}
+                        <div className="flex flex-col">
+              <label className="text-gray-700 text-sm font-medium mb-1">
+                User Name
+              </label>
+              <input
+                type="text"
+                name="userName"
+                value={formData.userName}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                required
+              />
+            </div>
 
             {/* Description */}
             <div className="col-span-1 md:col-span-2 flex flex-col">
