@@ -45,6 +45,10 @@ const leadSchema = new mongoose.Schema(
     employeeID: {
       type: String,
       required: [true, "employeeID is required"],
+    },
+    userName: {
+      type: String,
+      required: [true, "user Name is required"],
     }
   },
   { timestamps: true }
