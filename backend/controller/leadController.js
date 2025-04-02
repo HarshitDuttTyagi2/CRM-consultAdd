@@ -14,7 +14,8 @@ exports.createLead = async (req, res) => {
     stage,
     location,
     employeeID,
-    userName
+    userName,
+    requirements 
   } = req.body;
 
   try {
@@ -27,7 +28,8 @@ exports.createLead = async (req, res) => {
       !description ||
       !location ||
       !employeeID ||
-      !userName
+      !userName ||
+      !requirements
     ) {
       console.log("please fill all fields");
       return res.status(400).send({
@@ -55,6 +57,29 @@ exports.createLead = async (req, res) => {
         phoneNo: phone,
       });
     }
+
+    // Create a JSON object with months as keys and initialize all values to 0
+    const months = {
+      January: 0,
+      February: 0,
+      March: 0,
+      April: 0,
+      May: 0,
+      June: 0,
+      July: 0,
+      August: 0,
+      September: 0,
+      October: 0,
+      November: 0,
+      December: 0,
+    };
+
+    // Get the current month name
+    const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+
+    // Set the requirements value for the current month
+    months[currentMonth] = requirements;
+
     const leaddata = await lead.create({
       title,
       companyName,
@@ -66,7 +91,8 @@ exports.createLead = async (req, res) => {
       currentStage: stageData.stageName,
       location,
       employeeID,
-      userName
+      userName,
+      requirements: months // Store the months JSON object
     });
     stageData.leads.push(leaddata._id);
     await stageData.save();
