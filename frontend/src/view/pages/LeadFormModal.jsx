@@ -230,6 +230,22 @@ const LeadFormModal = ({
   </select>
             </div>
 
+            {/* Number of Requirements */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 text-sm font-medium mb-1">
+                No. of Requirements
+              </label>
+              <input
+                type="number"
+                name="requirements"
+                value={formData.requirements || ""}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Enter number of requirements"
+                required
+              />
+            </div>
+
             {/* Description */}
             <div className="col-span-1 md:col-span-2 flex flex-col">
               <label className="text-gray-700 text-sm font-medium mb-1">

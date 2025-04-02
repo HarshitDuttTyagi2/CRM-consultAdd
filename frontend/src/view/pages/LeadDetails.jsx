@@ -206,6 +206,14 @@ const LeadDetails = () => {
               className="w-full p-2 border rounded"
               rows="4"
             />
+                        <input
+              type="text"
+              name="Requirements"
+              value={lead.requirements}
+              onChange={handleInputChange}
+              placeholder="Enter requirements"
+              className="w-full p-2 border rounded"
+            />
             {/* <select
               name="stage"
               value={lead.currentStage}
@@ -245,6 +253,9 @@ const LeadDetails = () => {
             </p>
             <p className="text-xl text-gray-700">
               <strong>Current Stage:</strong> {lead.currentStage}
+            </p>
+            <p className="text-xl text-gray-700">
+              <strong>Total Requirements:</strong> {lead.requirements}
             </p>
             {/* <p className="text-xl text-gray-700">
               <strong>Team:</strong> {lead.team}
