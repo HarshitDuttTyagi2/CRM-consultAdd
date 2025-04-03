@@ -36,6 +36,7 @@ const Lead = () => {
   const [showAddStageModal, setShowAddStageModal] = useState(false);
   const [newStageName, setNewStageName] = useState("");
   const pipelineRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   const canCreateLead = user?.role === "admin" || user?.permission?.lead?.create;
@@ -240,6 +241,16 @@ const Lead = () => {
       <h1 className="text-4xl font-bold text-center  text-gray-800">
         Lead Management
       </h1>
+      <div className="relative w-1/3">
+  <input
+    type="text"
+    placeholder="Enter Company name, User name or Contact name"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+  />
+</div>
+
       <div className="text-center ">
         <button
           onClick={() => setShowModal(true)}
@@ -328,7 +339,14 @@ const Lead = () => {
               )}
 
               <div className="flex-1 overflow-y-auto hideScroll">
-                {pipeline[stage.stageName]?.map((lead) => (
+              {pipeline[stage.stageName]
+  ?.filter((lead) =>
+    lead.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    lead.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    lead.contactName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (lead.userName?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+  )
+  .map((lead) => (
                   <div
                     key={lead._id}
                     className="p-4 bg-white rounded-lg shadow-sm transition-all duration-300 hover:shadow-md border border-gray-200 mb-2"

@@ -5,22 +5,32 @@ import { useAuth } from "../../context/Context";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import { useToast } from "../../context/ToastContext";
 import { getAllUsers } from "../../services/authService";
-
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 const LeadDetails = () => {
   const { updateLead, deleteLead, getLeadById } = leadService;
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user} = useAuth();
+  const { user } = useAuth();
   const [lead, setLead] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
-  const {showToast} = useToast()
+  const { showToast } = useToast();
 
   const canReadLead = user?.role === "admin" || user?.permission?.lead?.read;
-  const canUpdateLead = user?.role === "admin" || user?.permission?.lead?.update;
-  const canDeleteLead = user?.role === "admin" || user?.permission?.lead?.delete;
+  const canUpdateLead =
+    user?.role === "admin" || user?.permission?.lead?.update;
+  const canDeleteLead =
+    user?.role === "admin" || user?.permission?.lead?.delete;
   const isAuthenticated = !!user;
   useEffect(() => {
     if (!isAuthenticated) {
@@ -44,7 +54,7 @@ const LeadDetails = () => {
       setLoading(true);
       const data = await getLeadById(id);
       console.log("Fetched Lead Data:", data);
-  
+
       setLead(data); // This will trigger the `useEffect` when `lead` updates
     } catch (err) {
       console.error("Error fetching lead details:", err);
@@ -76,7 +86,25 @@ const LeadDetails = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLead((prevLead) => ({ ...prevLead, [name]: value }));
+
+    if (name === "userName") {
+      // Find the selected user from the users list
+      const selectedUser = users.find((user) => user.name === value);
+
+      setLead((prevLead) => ({
+        ...prevLead,
+        userName: value,
+        employeeID: selectedUser ? selectedUser._id || selectedUser.userId : "", // Ensure employeeID updates
+      }));
+    } else if (name.startsWith("requirements-")) {
+      const month = name.replace("requirements-", "");
+      setLead((prevLead) => ({
+        ...prevLead,
+        requirements: { ...prevLead.requirements, [month]: value },
+      }));
+    } else {
+      setLead((prevLead) => ({ ...prevLead, [name]: value }));
+    }
   };
 
   const handleUpdate = async () => {
@@ -131,6 +159,19 @@ const LeadDetails = () => {
   if (!lead) {
     return <div className="text-center mt-8">Lead not found.</div>;
   }
+  // Calculate total requirements
+  const totalRequirements = Object.values(lead.requirements || {}).reduce(
+    (acc, val) => acc + Number(val || 0),
+    0
+  );
+
+  // Prepare data for the chart
+  const chartData = Object.entries(lead.requirements || {}).map(
+    ([month, value]) => ({
+      month,
+      requirements: Number(value || 0),
+    })
+  );
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
@@ -173,7 +214,7 @@ const LeadDetails = () => {
               placeholder="Enter Phone"
               className="w-full p-2 border rounded"
             />
-                       {/* <input
+            {/* <input
               type="text"
               name="userName"
               value={lead.userName}
@@ -182,21 +223,21 @@ const LeadDetails = () => {
               className="w-full p-2 border rounded"
             /> */}
 
-<select
-    name="userName"
-    value={lead.userName}
-    onChange={handleInputChange}
-    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-    placeholder="Enter User Name"
-    required
-  >
-    <option value="">Select a user</option>
-    {users.map((user) => (
-      <option key={user._id || user.userId} value={user.name}>
-        {user.name}
-      </option>
-    ))}
-  </select>
+            <select
+              name="userName"
+              value={lead.userName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter User Name"
+              required
+            >
+              <option value="">Select a user</option>
+              {users.map((user) => (
+                <option key={user._id || user.userId} value={user.name}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
 
             <textarea
               name="description"
@@ -206,6 +247,24 @@ const LeadDetails = () => {
               className="w-full p-2 border rounded"
               rows="4"
             />
+            <div className="space-y-2">
+              <label className="block font-bold text-gray-700">
+                Requirements (Monthly)
+              </label>
+              {Object.keys(lead.requirements || {}).map((month) => (
+                <div key={month} className="flex items-center space-x-2">
+                  <label className="w-24">{month}:</label>
+                  <input
+                    type="number"
+                    name={`requirements-${month}`}
+                    value={lead.requirements[month] || ""}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border rounded"
+                  />
+                </div>
+              ))}
+            </div>
+
             {/* <select
               name="stage"
               value={lead.currentStage}
@@ -246,6 +305,10 @@ const LeadDetails = () => {
             <p className="text-xl text-gray-700">
               <strong>Current Stage:</strong> {lead.currentStage}
             </p>
+            <p className="text-xl text-gray-700">
+              <strong>Total Requirements:</strong> {totalRequirements}
+            </p>
+
             {/* <p className="text-xl text-gray-700">
               <strong>Team:</strong> {lead.team}
             </p> */}
@@ -292,6 +355,28 @@ const LeadDetails = () => {
             Delete Lead
           </button>
         )}
+      </div>
+      {/* Bar Chart Below the Card */}
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">
+          Monthly Requirements Overview
+        </h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData}>
+            <XAxis
+              dataKey="month"
+              interval={0}
+              angle={-45}
+              textAnchor="end"
+              tick={{ fontSize: 14 }} // Adjust font size as needed
+            />
+
+            <YAxis />
+            <Tooltip />
+            <Legend wrapperStyle={{ marginBottom: -15 }}/>
+            <Bar dataKey="requirements" fill="#3B82F6" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

@@ -49,7 +49,12 @@ const leadSchema = new mongoose.Schema(
     userName: {
       type: String,
       required: [true, "user Name is required"],
-    }
+    },
+    requirements: {
+      type: Object,
+      required: false,
+      default: {}
+    },
   },
   { timestamps: true }
 );
