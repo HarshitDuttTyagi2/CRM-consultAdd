@@ -16,4 +16,18 @@ export const dashboardService = {
       throw error;
     }
   },
+
+  getUserData: async (employeeID) => {
+    try {
+      const response = await api.get("/dashboard/user", {         
+        params: {
+        employeeID,
+      },
+    });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching employee breakdown:", error);
+      throw error;
+    }
+  },
 };
