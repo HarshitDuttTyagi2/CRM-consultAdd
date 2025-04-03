@@ -260,3 +260,19 @@ exports.getAdminDashboardData = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+exports.getUserData = async (req, res) => {
+  try {
+    const employeeID = req.query.employeeID;
+    if (!employeeID) {
+      return res.status(400).json({ error: "Employee ID is required" });
+    }
+    const leadData = await Lead.find({ employeeID: employeeID });
+    return res.status(200).send({
+      leadData
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error.message });
+  }
+};
